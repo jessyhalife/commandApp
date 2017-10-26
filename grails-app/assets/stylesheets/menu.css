@@ -1,0 +1,68 @@
+
+.navbar{
+	background-color: #d0613a;
+}
+body{
+ min-height: 2000px;
+
+  padding-top: 70px;
+}
+
+.navbar-brand {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    text-align: center;
+    margin: auto;
+    font-family: "Orator Std", "Arial";
+    font-size: 25px;
+    
+}
+
+.plato-img{
+	min-width: 150px;
+	max-width: 150px;
+	min-height: 150px;
+	max-height: 150px;
+}
+
+.iconoRegimen{
+	max-width: 15px;
+}
+
+
+.filterOps {
+    margin-top: 49px;
+    background-color: #ddd;
+    
+    padding:0px;
+    max-height: 70px;
+
+}
+
+.menuDiv{
+	margin-top:60px;
+}
+
+.filter{
+	background-color: #eee;
+	padding: 10px;
+	border-radius: 20px 20px;
+}
+.nofilter{
+	padding: 10px;
+}
+.filter-active{
+	background-color: #4e504f;
+	color:white;
+	padding: 10px;
+	border-radius: 20px 20px;
+}
+
+.qty{
+	max-width: 160px;
+}
+.search {
+	top:-130px;
+}
