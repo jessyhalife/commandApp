@@ -16,6 +16,12 @@ class BootStrap {
  
  		def p2 = new Producto(nombre: "Milanesa con papas", descripcion: "Milanesa de ternera con papas al horno",
  					precio: 168, avgTimePrep: 20, urlFoto: "milanesa.jpg", tipo: t2).addToRegimenes(r1).save(flush: true)
+
+        def estado = new Estado(descripcion: "Pendiente", orden:1, glyphicon: "glyphicon glyphicon-hourglass").save()
+        estado = new Estado(descripcion: "En proceso", orden:2, glyphicon: "glyphicon glyphicon-fire").save()
+        estado = new Estado(descripcion: "Terminado", orden:3, glyphicon: "glyphicon glyphicon-ok-circle").save()
+        estado = new Estado(descripcion: "Camino a la mesa", orden:4, glyphicon:"glyphicon glyphicon-send").save()
+        estado = new Estado(descripcion: "Pagado", orden:4, glyphicon: "glyphicon glyphicon-usd").save()
     }	
     def destroy = {
     }

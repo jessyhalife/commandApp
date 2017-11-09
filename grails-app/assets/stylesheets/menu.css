@@ -1,13 +1,16 @@
-
 .navbar{
-	background-color: #d0613a;
+	background-color: #e8d63b;
 }
 body{
  min-height: 2000px;
-
   padding-top: 70px;
+  background-image: url(../images/restoback.jpg);
 }
-
+.logoapp{
+	float:left;
+	max-width: 120px;
+	min-width: 120px;
+}
 .navbar-brand {
     position: absolute;
     width: 100%;
@@ -19,23 +22,63 @@ body{
     font-size: 25px;
     
 }
-
-.plato-img{
-	min-width: 150px;
-	max-width: 150px;
-	min-height: 150px;
-	max-height: 150px;
+.backMenu{
+	 background: rgba(255, 255, 255, 0.6);
+}
+.agregador{
+	margin-top: 15px;
 }
 
+.plato > p{
+	font-size: 11pt;
+}
+.plato{
+	border: 1px #eee;
+	max-height: 400px;
+	min-height: 400px;
+	padding-top: 10px;
+	padding-bottom: 15px;
+}
+.plato-img{
+	min-width: 175px;
+	max-width: 175px;
+	min-height: 175px;
+	max-height: 175px;
+}
+.plato-img-modal{
+	min-width: 80px;
+	max-height: 80px;
+	min-height: 80px;
+	max-height: 80px;
+}
 .iconoRegimen{
 	max-width: 15px;
 }
-
-
+.labelCart{
+	background-color: black;
+	color: white;
+}
+.btnFloat{
+	left:40%;
+	position: fixed;
+	z-index: 1;
+	bottom:5%;
+	
+}
+.imgSugerido{
+	position: absolute;
+	font-size: 15pt;
+	background-color:red;
+	color:white;
+	left:5px;
+	top:5px;
+}
+.verCarrito{
+	background-color: white;	
+}
 .filterOps {
     margin-top: 49px;
     background-color: #ddd;
-    
     padding:0px;
     max-height: 70px;
 
@@ -49,6 +92,7 @@ body{
 	background-color: #eee;
 	padding: 10px;
 	border-radius: 20px 20px;
+	font-size: 9pt;
 }
 .nofilter{
 	padding: 10px;
@@ -58,11 +102,94 @@ body{
 	color:white;
 	padding: 10px;
 	border-radius: 20px 20px;
+	font-size: 9pt;
 }
 
-.qty{
-	max-width: 160px;
+.qty-select{
+	margin-right: 0px;
+	max-width: 60px;
+	float:left;
 }
+
 .search {
 	top:-130px;
+}
+
+.addToCart{
+	font-size: 8pt;
+	font-weight: bold;
+}
+
+.label-precio{
+	background-color: white;
+	border: 1px solid;
+	font-size: 10pt;
+	color:black;
+
+}
+
+.pedido-item{
+
+}
+
+li > a:hover > .btn-tipo{
+	background-color: none;
+	text-decoration: none;
+}
+
+.btn-tipo, .btn-reg, .btn-todos {
+	padding-right: 5px;
+	padding-left: 5px;
+	color:black;
+}
+
+.filtro-mobile{
+	background-color:white;
+	opacity: 1;
+}
+
+.btnPedir{
+	margin-left:40%;
+}
+
+.commentText{
+	margin-top: 5px;
+}
+.comment{
+	margin-top: 5px;
+}
+.tableroEspera{
+	background-color: white;
+	font-size: 14pt;
+}
+.speech-bubble {
+	position: relative;
+	background: white;
+	border-radius: .4em;
+	max-width: 180px;
+	padding: 20px;
+	border: solid;
+}
+
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-left-color: black;
+	border-right: 0;
+	border-bottom: 0;
+	margin-top: -10px;
+	margin-right: -20px;
+}
+.chef td {
+	font-size: 20px;
+}
+.chef thead {
+	font-size: 23px;
+}
+}
 }

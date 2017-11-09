@@ -16,6 +16,14 @@ class UsuarioController {
 
     def doLogin(){
       if (UsuarioService.validateUser(params.login, params.password)){
+        session.usuario = UsuarioService.getByLogin(params.login)
+        Pedido pedido = new Pedido()
+        List<PedidoItem> listaItems = new ArrayList<PedidoItem>()
+        pedido.mesa = (Usuario)session?.usuario
+        pedido.total = 0
+        pedido.items = listaItems
+        session.cart = pedido
+        println session.cart
         redirect(controller: 'pedido', action: 'index')
       }
       else{

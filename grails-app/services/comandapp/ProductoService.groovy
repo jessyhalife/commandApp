@@ -10,8 +10,8 @@ class ProductoService {
     	Producto.findAll()
     }
 
-    def getById(String nombre)
+    def getById(int id)
     {
-    	Producto.findByNombre(nombre)
+    	Producto.findById(id)
     }
 }

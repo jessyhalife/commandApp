@@ -17,4 +17,9 @@ class UsuarioService {
           false
 
     }
+
+    def getByLogin(String login)
+    {
+		Usuario.findByLogin(login)
+    }
 }

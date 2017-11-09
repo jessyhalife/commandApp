@@ -8,4 +8,7 @@ class RegimenAlimento {
     static constraints = {
     	urlIcono nullable:true
     }
+    static mapping = {
+    	productos lazy: false
+    }
 }

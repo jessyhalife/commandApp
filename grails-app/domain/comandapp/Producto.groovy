@@ -8,10 +8,14 @@ class Producto {
     String urlFoto 
     String urlVideo
     static belongsTo = [tipo : TipoProducto]
-    static hasMany = [regimenes : RegimenAlimento]
+    static hasMany = [regimenes : RegimenAlimento, itemsPedido: PedidoItem]
     static constraints = {
         urlFoto (nullable: true)
         urlVideo (nullable: true)
         regimenes (nullable: true)
+    }
+    static mapping = {
+        regimenes lazy:false
+        itemsPedido lazy:false
     }
 }
