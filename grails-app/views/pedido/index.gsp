@@ -22,9 +22,17 @@
           <a class="navbar-brand" href="#"><strong>COMANDAPP</strong></a>
         </div>
         <ul class="nav navbar-nav navbar-right" style="padding-top: 3px;">
+                <g:if test="${!session?.cart?.id.equals(null)}">
                 <li>
-                    <a href="#cartModal" data-toggle="modal" data-target="#cartModal" style="color:black;">
-                        
+                    <a href="statusPedido">
+                        <button type="button" class="btn btn-danger">
+                            Ver estado <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                        </button>
+                    </a>
+                </li>
+                </g:if>
+                <li>
+                    <a href="#cartModal" data-toggle="modal" data-target="#cartModal" style="color:black;">                        
                         <button type="button" class="btn verCarrito">
                             Cart <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true">
                             </span>&nbsp&nbsp<span class="badge labelCart">${session?.cart?.items?.size()}</span>
@@ -32,6 +40,7 @@
                         
                     </a>
                 </li>
+
             </ul>
       </div>
     </nav>
@@ -60,10 +69,21 @@
         </div>
       </div>
     </nav>
-    <g:form action="showCart" id="form-cartContinue" class="btnFloat">
+    <g:form action="cartView" id="form-cartContinue" class="btnFloat">
                 <g:submitButton class="btn btn-success btn-lg" value="Confirmar pedido!" name="btn-cartContinue" />
-            </g:form>
-
+    </g:form>
+    <g:if test="${flash.carritoVacio}">
+        <p class="alert alert-danger" style="margin-top:44px; text-align:center; margin-bottom:5px;">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <strong><g:message error="${flash.carritoVacio}"/></strong>
+        </p>
+    </g:if>
+    <g:if test="${flash.platoOk}">
+        <p class="alert alert-success" style="margin-top:44px; text-align:center;">
+            <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>
+            <strong><g:message error="${flash.platoOk}"/></strong>
+        </p>
+    </g:if>
     <div class="container menuDiv">
         <div class="jumbotron backMenu">
             <div style="z-index:1;">
@@ -75,34 +95,33 @@
                 </g:if>
                 <div class="row">
                 <g:each in="${item.productos.sort(true){it.nombre.toUpperCase()}}" var="pl"> 
-                    <div class="col-md-3 plato">
+                    <div class="col-sm-4 plato">
+                    <span class="label imgSugerido"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>  Recomendado</span>
                         <asset:image class="plato-img img-rounded" src="platos/${pl.urlFoto}"/>
-                        <h4>
-                            ${pl.nombre}<br>
-                            <g:each in="${pl.regimenes}" var="reg"><asset:image class="iconoRegimen" src="iconregimen/${reg.urlIcono}" alt="${reg.descripcion}"/></g:each>
-                        </h4>
-                        <p>${pl.descripcion}</p>
-                        <span class="label label-precio">$${pl.precio}</span>
-                        <br><br>
-                             <div class="form-group">
-                                <g:form action="addToCart" id="${pl.id}">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <g:select class="form-control qty-select" name="qty${pl.id}" from="${1..10}"/>
-                                    </div>
-                                    <div class="col-sm-4">
-                                    <g:submitButton class="btn btn-secondary btn-sm" style="float:left;" value="Agregar" name="add${pl.id}"/>
-                                    </div>
-                                </div>
-                                </g:form>
-                            </div>
-                        
+                        <div class="datos-plato">
+                            <h4>
+                                ${pl.nombre}<br>
+                                <g:each in="${pl.regimenes}" var="reg"><asset:image id="${reg.id}" class="iconoRegimen" src="iconregimen/${reg.urlIcono}" alt="${reg.descripcion}"/>&nbsp</g:each>
+                            </h4>
+                            <p>${pl.descripcion}</p>
+                            <h4>$${pl.precio}</h4>
+                        </div>
+                        <g:if test="${!pl.urlVideo.equals(null) && !pl.urlVideo.equals("")}">
+                                    <a href="#videoModal" data-toggle="modal" data-target="#videoModal" class="btn btn-default videoOpen gly-spin" style="margin:4px;float:right;">
+                                        <i class="glyphicon glyphicon-facetime-video"></i>  video
+                                    </a>
+                                </g:if>
+                        <div class="form-group">
+                            <g:form action="addToCart" id="${pl.id}">
+                                <g:select class="form-control qty-select" name="qty${pl.id}" from="${1..10}"/>
+                                <g:submitButton class="btn btn-secondary btn-sm addPlato"  value="Agregar a mi pedido" name="add${pl.id}"/>
+                            </g:form>
+                        </div>
                     </div>
                 </g:each>
                 </div>  
                 <hr>
                 </div>
-                <br>
             </g:each>
         </div>
         </div>
@@ -126,18 +145,19 @@
           </div>
           <div class="modal-body">
             <table class="table">
-            <g:each in="${session?.cart?.items}" var="it">
+            <g:each in="${session?.cart?.items}" var="it" session="i">
                 <tr>
+                    <td class="hidden">${i}</td>
                     <td style="display:none;">${it.producto?.id}</td>
                     <td><h3>${it.producto?.nombre}</h3></td>
                     <td><h3>$${it.producto?.precio}</h3></td>
-                    <td><h3><a href="#" class="close eliminarItemModal" aria-label="Close" id="${it.itemId}" >
-                            <span aria-hidden="true">&times;</span></a></h3></td>
+                    <td><h3><a href="#" class="eliminarItemModal" aria-label="Close" id="${it.itemId}" >
+                            <span class="btn btn-danger quitar">&times; Quitar</span></a></h3></td>
                 </tr>
             </g:each>
             <tr>
                 <td colspan="2"><h2>Total:</h2></td>
-                <td><h2>$${session?.cart?.total}</h2></td>
+                <td><h2 id="totalModal">$${session?.cart?.total}</h2></td>
             </tr>
             </table>
           </div>
@@ -147,7 +167,7 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Volver</button>
                 </div>
                 <div class="col-md-10">
-                <g:form action="showCart" id="form-cartContinue">
+                <g:form action="CartView" id="form-cartContinue">
                     <g:submitButton class="btn btn-success" value="Confirmar pedido!" name="btn-cartContinue" />
                 </g:form>
                 </div>
@@ -183,15 +203,25 @@
            </div>
         </div>
     </div>
+   <!-- modal video -->
+    <div id="videoModal" class="modal">
+            PRUEBA!!!!!!
+    </div>
+   <!-- fin modal video -->
     <!-- fin modal filtros mobile-->
         <script>
+
             $(".btn-reg").click(function(e){
+                var actualId = $(this).attr("id");
                 if ($(this).children().attr("class") == "filter"){
                     $(this).children().attr("class", "filter-active")
+
                 }else{
                     $(this).children().attr("class", "filter")
                 }
             });
+
+
             $(".btn-tipo").click(function(e){
                 var mostrar = false;
                 if ($(this).children().attr("class") == "filter"){
@@ -247,18 +277,30 @@
                 $(".btn-tipo").each(function(){
                     $(this).children().attr("class", "filter")   
                     var platos = document.getElementById("tipo"+ $(this).attr("id"));
-                    platos.style.display = "block";
+                    platos.style.display = "block"; 
                 });
             });
             $(".eliminarItemModal").click(function(){
                 var itemId = $(this).attr('id');
                 var URL="${createLink(controller:'pedido',action:'eliminarItemModal')}";
+                var element = $(this).parent().parent().parent();
                 $.ajax({
                     url:URL,
-                    data: {itemId: itemId}
+                    data: {itemId: itemId},
+                    success: function(data){
+                        $(".labelCart").text(data.split("|")[1]);
+                        element.remove();
+                        $("#totalModal").text("$"+data.split("|")[0]);
+                        if(data.split("|")[1] == "0"){
+                            $("#cartModal").modal("toggle");
+                        }
+                    }
                 });
             });
-            
+            $(".videoOpen").click(function(){
+                  alert("hola");
+                  
+                });
         </script>
 	</body>
 </html>

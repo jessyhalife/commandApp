@@ -23,7 +23,6 @@ class UsuarioController {
         pedido.total = 0
         pedido.items = listaItems
         session.cart = pedido
-        println session.cart
         redirect(controller: 'pedido', action: 'index')
       }
       else{
@@ -31,6 +30,9 @@ class UsuarioController {
         redirect action:'index'
       }
     }
+
+
+    /* Metodos grails que por ahora no voy a usar */
     def show(Usuario usuarioInstance) {
         respond usuarioInstance
     }

@@ -34,6 +34,7 @@
             </div>
           </div>
           <hr>
+          <p>Nro Pedido: ${pedidoInstance?.id}</p>
           <div style="text-align: center;">
           <span class="glyphicon glyphicon-time" aria-hidden="true" style="font-size: 50px;"></span>
           	<h3>Estará listo en ${tiempoAvg} <g:if test="${tiempoAvg < 60}">minutos!</g:if><g:else>${tiempoAvg.intdiv(60)} hora y ${(tiempoAvg.div(60)) - tiempoAvg.intdiv(60)} minutos!</g:else></h3>
@@ -50,7 +51,7 @@
       	  </div>
         </div>
         <div style="text-align: center">
-       	<a href="${createLink(action:'cartView')}" class="btn btn-primary btn-lg">
+       	<a href="${createLink(action:'index')}" class="btn btn-primary btn-lg">
     		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
     			Seguir pidiendo
 		</a>
@@ -69,7 +70,7 @@
              setTimeout(refresh, 100);
      }
 
-     setTimeout(refresh, 100);
+     setTimeout(refresh, 360000);
 	</script>    
 	</body>
 

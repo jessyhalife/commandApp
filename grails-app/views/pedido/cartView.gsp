@@ -36,7 +36,7 @@
 	    			<tr>
 	    				<td>${it.itemId}</td>
 	    				<td>
-	    					<asset:image class="plato-img img-rounded" src="platos/${it.producto.urlFoto}"/>
+	    					<asset:image class="plato-img-cartView img-rounded" src="platos/${it.producto.urlFoto}"/>
 	    				</td>
 	    				<td>
 	    					<h3>${it.producto.nombre}</h3><br>
@@ -50,8 +50,8 @@
 							<button class="btn btn-secondary btn-sm btnComment" id="${it.itemId}">Agregar comentario  
 								<span class="glyphicon glyphicon-pencil" aria-hidden="true">
 							</button>
-							<a href="${createLink(action: 'eliminarDelPedido', params:[itemId: it.itemId])}" class="close" aria-label="Close">
-							<span aria-hidden="true">&times;</span></a>
+							<a href="${createLink(action: 'eliminarDelPedido', params:[itemId: it.itemId])}" class="" aria-label="Close">
+							<span class="btn btn-danger quitar">&times; Quitar</span></a>
 							<textarea id="comentario${it.itemId}" placeholder="Retocá tu plato!" class="form-control comment hidden"></textarea>
 							<div id="comentarioTexto${it.itemId}" class="commentText">${it.comentario}</div>
 							</g:if>
@@ -70,7 +70,12 @@
 	    		</tr>
 	    	</table>
 				 <g:form action="guardarPedido" id="form-cartPedir">
-                <g:submitButton class="btn btn-success btn-lg btnPedir" value="Pedir!" name="btn-cartPedir" />
+				 <g:if test="${session.cart.id.equals(null) == true}">
+                	<g:submitButton class="btn btn-success btn-lg btnPedir" value="Pedir!" name="btn-cartPedir" />
+                 </g:if>
+                 <g:else>
+                 	<g:submitButton class="btn btn-success btn-lg btnPedir" value="Guardar cambios!" name="btn-cartPedir" />	
+                 </g:else>
             </g:form>
     	</div>
     </div>
